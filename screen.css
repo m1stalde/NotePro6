@@ -1,0 +1,103 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+body {
+    margin: 0;
+    background-color: #CCDCE9;
+}
+
+.container {
+    background-color: burlywood;
+    padding: 1em;
+}
+
+.filter {
+    padding-top: 1em;
+}
+
+.selected {
+    background-color: lightblue;
+}
+
+.right {
+    right: 1em;
+    position: absolute;
+}
+
+.content {
+    background-color: yellow;
+    height: 30em;
+}
+
+.note {
+    background-color: #cfffc8;
+    position: relative;
+    height: 5.1em;
+    min-width: 50em;
+    border-top: 1px solid #5eff68;
+}
+
+.noteitem {
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+}
+
+.duedate {
+    top: 1em;
+    left: 1em;
+    width: 15em;
+}
+
+.title {
+    right: 7em;
+    top: 1em;
+    left: 16em;
+    white-space: nowrap;
+}
+
+.importance {
+    width: auto;
+    top: 1em;
+    right: 7em;
+    padding-left: 1em;
+    background-color: #cfffc8;
+}
+
+.icon-importance {
+    background: url(power.svg) no-repeat;
+    background-size: 1.5em 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+}
+
+.finished {
+    width: 15em;
+    top: 3em;
+    left: 1em;
+}
+
+.finished input {
+    margin-left: 0;
+}
+
+.description {
+    border: 1px solid #CCDCE9;
+    background-color: white;
+    top: 3em;
+    left: 16em;
+    bottom: 1em;
+    right: 7em;
+    padding: 0.4em;
+}
+
+.editbutton {
+    width: 5em;
+    height: 5em;
+    right: 1em;
+    bottom: 1em;
+}
+
