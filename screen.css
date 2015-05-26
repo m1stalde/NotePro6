@@ -71,6 +71,14 @@ body {
     padding: 1em;
 }
 
+.col-title {
+    flex: 1 1 20em;
+}
+
+.col-importance {
+    flex: 0 0 15em;
+}
+
 .col-description {
     overflow: hidden;
     max-height: 2.3em;
