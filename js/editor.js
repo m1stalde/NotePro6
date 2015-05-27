@@ -1,7 +1,18 @@
 
 var noteList = new Array();
+var	createNotesHtml_T;
 
 window.onload = function(){
+    /*Modernizr.load({
+        test: Modernizr.inputtypes.date,
+        nope: "js/jquery-ui.custom.js",
+        callback: function() {
+            $("input[type=date]").datepicker();
+        }
+    });*/
+
+    createNotesHtml_T = Handlebars.compile($("#noteListTemplate").html());
+
     document.getElementById("btnCreateNote").addEventListener("click", function(){
         showEditor();
     });
@@ -19,10 +30,9 @@ window.onload = function(){
         switchStyle(evt.target.value);
     });
 
-    var noteListNode = document.getElementById("noteList");
-    var noteTemplateNode = document.getElementById("noteTemplate");
-    appendNote(noteListNode, noteTemplateNode, new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", "2015-02-01", "2015-05-27"));
-    appendNote(noteListNode, noteTemplateNode, new Note("Titel", "Beschreibung", "2015-02-01", "2015-05-27"));
+    noteList.push(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", "2015-02-01", "2015-05-27"));
+    noteList.push(new Note("Titel", "Beschreibung", "2015-02-01", "2015-05-27"));
+    renderNotes();
 }
 
 function hideEditor() {
@@ -88,20 +98,9 @@ function Note(title, description, duedate, finishdate) {
 
 function addNote(note) {
     this.noteList.push(note);
-    var noteListNode = document.getElementById("noteList");
-    var noteTemplateNode = document.getElementById("noteTemplate");
-    appendNote(noteListNode, noteTemplateNode, note);
+    renderNotes();
 }
 
-function appendNote(noteListNode, noteTemplateNode, note) {
-    var node = noteTemplateNode.cloneNode(true);
-    var dataBindElements = node.querySelectorAll("[data-bind]");
-    for (var i = 0; i < dataBindElements.length ; i++ ) {
-        var attrName = dataBindElements[i].getAttribute("data-bind");
-        if (note[attrName] !== undefined) {
-            //dataBindElements[i].innerHTML = note[attrName];
-            dataBindElements[i].textContent = note[attrName];
-        }
-    }
-    noteListNode.appendChild(node);
+function renderNotes() {
+    $("#noteList").html(createNotesHtml_T(noteList));
 }
