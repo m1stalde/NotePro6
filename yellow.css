@@ -1,0 +1,20 @@
+body {
+    background-color: #f2f200;
+}
+
+.container {
+    background-color: burlywood;
+}
+
+.selected {
+    background-color: lightblue;
+}
+
+.note {
+    background-color: #ffffff;
+    border-top-color: #f2f200;
+}
+
+.modalDialog>div {
+    background-color: #a2faff;
+}

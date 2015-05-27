@@ -5,14 +5,17 @@
 		<title>Note Pro</title>
 		<link rel="stylesheet" href="screen.css">
         <!-- <link rel="stylesheet" href="debug.css"> -->
+        <link id="pagestyle" rel="stylesheet" type="text/css" title="blackwhite" href="blackwhite.css">
+        <!-- <link rel="alternate stylesheet" type="text/css" title="yellow" href="yellow.css"> -->
 	</head>
 
 	<body>
         <header class="header container" role="banner">
             <nav role="navigation" class="navigation">
                 <input id="btnCreateNote" type="button" value="Create new Note">
-                <select class="right">
-                    <option value="BlackWhite-Style">BlackWhite-Style</option>
+                <select id="selTheme" class="right">
+                    <option value="blackwhite.css">BlackWhite-Style</option>
+                    <option value="yellow.css">Yellow-Style</option>
                 </select>
             </nav>
 
@@ -24,96 +27,74 @@
             </div>
         </header>
 
-        <main class="main" role="main" class="content container">
-
-            <article class="note" role="article">
-                <div class="row">
-                    <div class="col col-1">Nächsten Mittwoch</div>
-                    <div class="col col-2 col-title">
-                        <span>CAS FEE Selbststudium / Projekt Aufgabe erledigen</span>
-                    </div>
-                    <div class="col col-3 col-importance">
-                        <span class="icon-importance"></span>
-                        <span class="icon-importance"></span>
-                        <span class="icon-importance"></span>
-                        <span class="icon-importance"></span>
-                        <span class="icon-importance"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col col-1">
-                        <input type="checkbox" value="finished">Finished [Today]
-                    </div>
-                    <div class="col col-2 col-description">
-                        <span>HTML für die note App erstellen.<br/>CSS erstellen für die Note App. Test Test Test Test Test Test Test Test Test Test</span>
-                    </div>
-                    <div class="col col-3 col-editbutton">
-                        <input class="editbutton" type="button" value="Edit" onclick="editNote('id')">
-                    </div>
-                </div>
-            </article>
-
-            <article class="note" role="article">
-                <div class="row">
-                    <div class="col col-1">Nächsten Mittwoch</div>
-                    <div class="col col-2 col-title">
-                        <span>CAS FEE Selbststudium / Projekt Aufgabe erledigen erledigen erledigen</span>
-                    </div>
-                    <div class="col col-3 col-importance">
-                        <span class="icon-importance"></span>
-                        <span class="icon-importance"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col col-1">
-                        <input type="checkbox" value="finished">Finished [Today]
-                    </div>
-                    <div class="col col-2 col-description">
-                        <span>HTML für die note App erstellen.<br/>CSS erstellen für die Note App.<br/>CSS erstellen für die Note App.</span>
-                    </div>
-                    <div class="col col-3 col-editbutton">
-                        <input class="editbutton" type="button" value="Edit" onclick="editNote('id')">
-                    </div>
-                </div>
-            </article>
-
+        <main id="noteList" class="main" role="main" class="content container">
         </main>
 
         <div id="noteEditor" class="modalDialog">
-            <div class="container noteEditor">
-                <div class="row">
-                    <div class="col col-1"><h1>Notiz bearbeiten</h1></div>
-                    <div class="col col-2"><a id="btnCloseEditor" href="#close" title="Close" class="close right">X</a></div>
-                </div>
-                <div class="row">
-                    <div class="col col-1">Title</div>
-                    <div class="col col-2"><input type="text" name="title"></div>
-                </div>
-                <div class="row">
-                    <div class="col col-1">Beschreibung</div>
-                    <div class="col col-2">
-                        <textarea name="description">HTML für die note App.</textarea>
+            <form id="noteEditorForm" onsubmit="return false;">
+                <div class="container noteEditor">
+                    <div class="row">
+                        <div class="col col-1"><h1>Notiz bearbeiten</h1></div>
+                        <div class="col col-2"><a id="btnCloseEditor" href="#close" title="Close" class="close right">X</a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-1">Title</div>
+                        <div class="col col-2"><input type="text" name="title"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-1">Beschreibung</div>
+                        <div class="col col-2">
+                            <textarea name="description">HTML für die note App.</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-1">Wichtigkeit</div>
+                        <div class="col col-2">
+                            <span class="icon-importance"></span>
+                            <span class="icon-importance"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-1">Erledight bis</div>
+                        <div class="col col-2"><input type="date" name="duedate"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-1"></div>
+                        <div class="col col-2">
+                            <input id="btnCancelNote" type="button" value="Abbrechen" class="right">
+                            <input id="btnSaveNote" type="button" value="Speichern" class="right">
+                        </div>
                     </div>
                 </div>
+            </form>
+        </div>
+
+        <div id="templates" style="display: none;">
+            <article id="noteTemplate" class="note" role="article">
                 <div class="row">
-                    <div class="col col-1">Wichtigkeit</div>
-                    <div class="col col-2">
+                    <div class="col col-1" data-bind="duedate"></div>
+                    <div class="col col-2 col-title" data-bind="title">
+                    </div>
+                    <div class="col col-3 col-importance" data-bind="importance">
                         <span class="icon-importance"></span>
                         <span class="icon-importance"></span>
+                        <span class="icon-importance"></span>
+                        <span class="icon-importance"></span>
+                        <span class="icon-importance"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-1">Erledight bis</div>
-                    <div class="col col-2"><input type="date" name="duedate"></div>
-                </div>
-                <div class="row">
-                    <div class="col col-1"></div>
-                    <div class="col col-2">
-                        <input id="btnCancelNote" type="button" value="Abbrechen" class="right">
-                        <input id="btnSaveNote" type="button" value="Speichern" class="right">
+                    <div class="col col-1">
+                        <input type="checkbox" checked data-bind="finished">
+                        <span data-bind="finishdateFormat"></span>
+                    </div>
+                    <div class="col col-2 col-description" data-bind="description">
+                    </div>
+                    <div class="col col-3 col-editbutton">
+                        <input class="editbutton" type="button" value="Edit" onclick="editNote('id')">
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
 
         <!-- load javascript after page load -->

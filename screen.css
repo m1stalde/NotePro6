@@ -5,11 +5,9 @@
 
 body {
     margin: 0;
-    background-color: #f2f200;
 }
 
 .container {
-    background-color: burlywood;
     padding: 1em;
 }
 
@@ -18,7 +16,6 @@ body {
 }
 
 .selected {
-    background-color: lightblue;
 }
 
 .right {
@@ -65,9 +62,8 @@ body {
 /* note list */
 
 .note {
-    background-color: #ffffff;
     min-width: 50em;
-    border-top: 1px solid #f2f200;
+    border-top: 1px solid;
     padding: 1em;
 }
 
@@ -114,7 +110,6 @@ body {
     left: 10em;
     top: 10em;
     right: 10em;
-    background-color: #a2faff;
 }
 
 .noteEditor textarea[name="description"] {
