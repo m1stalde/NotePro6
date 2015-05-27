@@ -99,7 +99,7 @@ function appendNote(noteListNode, noteTemplateNode, note) {
     for (var i = 0; i < dataBindElements.length ; i++ ) {
         var attrName = dataBindElements[i].getAttribute("data-bind");
         if (note[attrName] !== undefined) {
-            dataBindElements[i].innerText = note[attrName];
+            dataBindElements[i].innerHTML = note[attrName];
         }
     }
     noteListNode.appendChild(node);
