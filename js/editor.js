@@ -11,6 +11,13 @@ window.onload = function(){
         }
     });*/
 
+    Handlebars.registerHelper('for', function(from, to, incr, block) {
+        var accum = '';
+        for(var i = from; i < to; i += incr)
+            accum += block.fn(i);
+        return accum;
+    });
+
     createNotesHtml_T = Handlebars.compile($("#noteListTemplate").html());
 
     document.getElementById("btnCreateNote").addEventListener("click", function(){
@@ -30,8 +37,8 @@ window.onload = function(){
         switchStyle(evt.target.value);
     });
 
-    noteList.push(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", "2015-02-01", "2015-05-27"));
-    noteList.push(new Note("Titel", "Beschreibung", "2015-02-01", "2015-05-27"));
+    noteList.push(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", "2015-02-01", "2015-05-27", 5));
+    noteList.push(new Note("Titel", "Beschreibung", "2015-02-01", "2015-05-27", 3));
     renderNotes();
 }
 
@@ -78,11 +85,12 @@ function switchStyle (cssFileName) {
 }
 
 
-function Note(title, description, duedate, finishdate) {
+function Note(title, description, duedate, finishdate, rating) {
     this.title = title;
     this.description = description;
     this.duedate = duedate;
     this.finishdate = finishdate;
+    this.rating = rating;
 
     if (this.duedate) {
         this.duedate = new Date(this.duedate).toLocaleDateString();

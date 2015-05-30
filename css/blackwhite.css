@@ -2,7 +2,7 @@ body {
     background-color: #ffffff;
 }
 
-.container {
+.header {
     background-color: #ffffff;
 }
 
@@ -15,6 +15,10 @@ body {
     border-top-color: #d1d1d1;
 }
 
-.modalDialog>div {
+.modalDialog {
+    background-color: rgba(209,209,209,0.5);
+}
+
+.noteEditor {
     background-color: #d1d1d1;
 }
