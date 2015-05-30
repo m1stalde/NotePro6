@@ -91,8 +91,8 @@ NoteApp.prototype.loadNotes = function loadNotes() {
     }
 
     if (!this.notes || this.notes.length == 0) {
-        this.notes.push(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", 5, "2015-02-01", "2015-05-27"));
-        this.notes.push(new Note("Titel", "Beschreibung", 3, "2015-02-01", "2015-05-27"));
+        this.addNote(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", 5, "2015-02-01", "2015-05-27"));
+        this.addNote(new Note("Titel", "Beschreibung", 3, "2015-02-01", "2015-05-27"));
     }
 }
 
