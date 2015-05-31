@@ -46,7 +46,7 @@ NoteEditor.prototype.editNote = function editNote(note) {
 
     editorForm.elements["title"].value = note.title ? note.title : "";
     editorForm.elements["description"].value = note.description ? note.description : "";
-    //editorForm.elements["rating"].value = note.rating; // TODO implement rating
+    //editorForm.elements["importance"].value = note.rating; // TODO implement rating
     editorForm.elements["duedate"].value = note.duedate ? note.duedate : "";
 
     this.showEditor();
@@ -57,8 +57,9 @@ NoteEditor.prototype.saveNote = function saveNote() {
 
     this.note.title = editorForm.elements["title"].value;
     this.note.description = editorForm.elements["description"].value;
-    //this.rating = editorForm.elements["rating"].value; // TODO implement rating
-    this.duedate = editorForm.elements["duedate"].value;
+    //this.importance = editorForm.elements["importance"].value; // TODO implement rating
+    this.note.importance = 3;
+    this.note.duedate = editorForm.elements["duedate"].value;
 
     this.noteApp.addNote(this.note);
     this.hideEditor();

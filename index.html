@@ -23,10 +23,11 @@
             </nav>
 
             <div id="filter" class="filter">
-                <input type="button" value="By finish Date">
-                <input type="button" value="By created Date">
-                <input class="selected" type="button" value="By Importance">
-                <input class="right" type="button" value="Show finished">
+                <input id="btnSortDueDate" type="button" value="By due Date" class="selected">
+                <input id="btnSortFinishDate" type="button" value="By finish Date">
+                <input id="btnSortCreationDate" type="button" value="By created Date">
+                <input id="btnSortImportance" type="button" value="By Importance">
+                <input id="btnShowFinished" type="button" value="Show finished" class="right">
             </div>
         </header>
 
@@ -39,11 +40,11 @@
                 <div class="container noteEditor">
                     <div class="row">
                         <div class="col col-1"><h1>Notiz bearbeiten</h1></div>
-                        <div class="col col-2"><a id="btnCloseEditor" href="#close" title="Close" class="close right">X</a></div>
+                        <div class="col col-2"><a id="btnCloseEditor" href="#" title="Close" class="close right">X</a></div>
                     </div>
                     <div class="row">
                         <div class="col col-1">Titel</div>
-                        <div class="col col-2"><input type="text" name="title"></div>
+                        <div class="col col-2"><input type="text" name="title" required></div>
                     </div>
                     <div class="row">
                         <div class="col col-1">Beschreibung</div>
@@ -54,14 +55,14 @@
                     <div class="row">
                         <div class="col col-1">Wichtigkeit</div>
                         <div class="col col-2">
-                            <span class="rating">
+                            <span class="importance">
                                 <span class="bolt"></span><span class="bolt"></span><span class="bolt"></span><span class="bolt"></span><span class="bolt"></span>
                             </span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col col-1">Erledigt bis</div>
-                        <div class="col col-2"><input type="date" name="duedate"></div>
+                        <div class="col col-2"><input type="date" name="duedate" required></div>
                     </div>
                     <div class="row">
                         <div class="col col-2 col-editorbuttons">
@@ -80,14 +81,18 @@
                         <div class="col col-1">{{duedate}}</div>
                         <div class="col col-2 col-title">{{title}}</div>
                         <div class="col col-3 col-importance">
-                            {{#for 0 rating 1}}
+                            {{#for 0 importance 1}}
                             <span class="fa fa-bolt fa-2x"></span>
                             {{/for}}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col col-1">
-                            <input type="checkbox" {{finished}}>
+                            {{#if finishdate}}
+                                <input type="checkbox" checked>
+                            {{else}}
+                                <input type="checkbox">
+                            {{/if}}
                             <span>{{finishdate}}</span>
                         </div>
                         <div class="col col-2 col-description">{{description}}</div>

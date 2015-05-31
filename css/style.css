@@ -44,27 +44,27 @@
 
 
 /* bolt rating */
-.rating {
+.importance {
     unicode-bidi: bidi-override;
     direction: rtl;
 }
-.rating span.bolt {
+.importance span.bolt {
     font-family: FontAwesome;
     font-weight: normal;
     font-style: normal;
     display: inline-block;
     font-size: 2em;
 }
-.rating span.bolt:hover {
+.importance span.bolt:hover {
     cursor: pointer;
 }
-.rating span.bolt:before {
+.importance span.bolt:before {
     content: "\f0e7";
     padding-right: 5px;
     color: #9d9d9d;
 }
-.rating span.bolt:hover:before,
-.rating span.bolt:hover ~ span.bolt:before {
+.importance span.bolt:hover:before,
+.importance span.bolt:hover ~ span.bolt:before {
     content: "\f0e7";
     color: #000000;
 }
