@@ -3,11 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Note Pro</title>
-		<link rel="stylesheet" href="css/screen.css">
-        <!-- <link rel="stylesheet" href="debug.css"> -->
         <link rel="stylesheet" href="lib/font-awesome-4.3.0/css/font-awesome.min.css">
-        <link id="pagestyle" rel="stylesheet" type="text/css" title="blackwhite" href="css/blackwhite.css">
-        <!-- <link rel="alternate stylesheet" type="text/css" title="yellow" href="css/yellow.css"> -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/layout-wide.css">
+        <!-- <link rel="stylesheet" media="(min-width: 600px)" href="css/layout-wide.css">
+        <link rel="stylesheet" media="(max-width: 599px)" href="css/layout-narrow.css"> -->
+        <link rel="stylesheet" id="pagestyle" href="css/theme-yellow.css">
+        <!-- <link rel="stylesheet" href="css/debug.css"> -->
 	</head>
 
 	<body>
@@ -15,8 +17,8 @@
             <nav role="navigation" class="navigation">
                 <input id="btnCreateNote" type="button" value="Create new Note">
                 <select id="selTheme" class="right">
-                    <option value="css/blackwhite.css">BlackWhite-Style</option>
-                    <option value="css/yellow.css">Yellow-Style</option>
+                    <option value="css/theme-black.css">BlackWhite-Style</option>
+                    <option value="css/theme-yellow.css" selected>Yellow-Style</option>
                 </select>
             </nav>
 
@@ -28,7 +30,7 @@
             </div>
         </header>
 
-        <main id="noteList" class="main" role="main" class="content container">
+        <main id="noteList" class="main container" role="main">
         </main>
 
         <div id="noteEditor" class="modalDialog">
@@ -61,8 +63,7 @@
                         <div class="col col-2"><input type="date" name="duedate"></div>
                     </div>
                     <div class="row">
-                        <div class="col col-1"></div>
-                        <div class="col col-2">
+                        <div class="col col-2 col-editorbuttons">
                             <input id="btnCancelNote" type="button" value="Abbrechen" class="right">
                             <input id="btnSaveNote" type="button" value="Speichern" class="right">
                         </div>

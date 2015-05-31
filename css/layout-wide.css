@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+}
+
+.container {
+    padding: 1em;
+}
+
+.filter {
+    padding-top: 1em;
+}
+
+.right {
+    float: right;
+    margin-left: 1em;
+}
+
+
+/* column grid */
+
+.row {
+    display: flex;
+}
+
+.row:not(:first-child) {
+    margin-top: 1em;
+}
+
+.col:not(:first-child) {
+    margin-left: 1em;
+}
+
+.col-1 {
+    flex: 0 0 13em;
+}
+
+.col-2 {
+    flex: 1 1 30em;
+}
+
+.col-3 {
+    flex: 0 0 5em;
+}
+
+
+/* note list */
+
+.note {
+    min-width: 50em;
+    border-top: 1px solid;
+    padding: 1em;
+}
+
+.col-title {
+    flex: 1 1 20em;
+}
+
+.col-importance {
+    flex: 0 0 15em;
+}
+
+.col-description {
+    overflow: hidden;
+    max-height: 2.3em;
+}
+
+.col-editbutton {
+    position: relative;
+}
+
+.editbutton {
+    position: absolute;
+    width: 5em;
+    height: 4em;
+    right: 0em;
+    bottom: 0em;
+}

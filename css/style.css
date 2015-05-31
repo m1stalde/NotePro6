@@ -1,0 +1,70 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+
+.selected {
+}
+
+/* note editor */
+
+.modalDialog {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.modalDialog>form {
+    position: absolute;
+    left: 10em;
+    top: 10em;
+    right: 10em;
+    min-width: 35em;
+}
+
+.noteEditor textarea[name="description"] {
+    height: 6em;
+}
+
+/* display form elements with full width */
+.col>textarea, .col>input[type="text"] {
+    width: 100%;
+    border: 0;
+}
+
+/* align checkbox left */
+.col>input[type="checkbox"] {
+    margin-left: 0;
+}
+
+
+/* bolt rating */
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+.rating span.bolt {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    font-size: 2em;
+}
+.rating span.bolt:hover {
+    cursor: pointer;
+}
+.rating span.bolt:before {
+    content: "\f0e7";
+    padding-right: 5px;
+    color: #9d9d9d;
+}
+.rating span.bolt:hover:before,
+.rating span.bolt:hover ~ span.bolt:before {
+    content: "\f0e7";
+    color: #000000;
+}

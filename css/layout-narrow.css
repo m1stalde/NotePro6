@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+
+.container {
+    padding: 1em;
+}
+
+.filter {
+    padding-top: 1em;
+}
+
+/* column grid */
+
+.row {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+}
+
+.row:not(:first-child) {
+    margin-top: 1em;
+}
+
+.col:not(:first-child) {
+    margin-top: 1em;
+}
+
+.col-1 {
+}
+
+.col-2 {
+}
+
+.col-3 {
+}
+
+
+/* note list */
+
+.note {
+    border-top: 1px solid;
+    padding: 1em;
+}
+
+.col-description {
+    overflow: hidden;
+    max-height: 2.3em;
+}
+
+.editbutton {
+    width: 100%;
+}
+
+
+/* note editor */
+
+.modalDialog>form {
+    left: 0em;
+    top: 0em;
+    right: 0em;
+}
