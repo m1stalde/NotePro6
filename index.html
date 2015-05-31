@@ -30,8 +30,9 @@
             </div>
         </header>
 
-        <main id="noteList" class="main container" role="main">
-        </main>
+        <!-- use <div> instead of <main> because <main> isn't supported in internet explorer -->
+        <div id="noteList" class="main container" role="main">
+        </div>
 
         <div id="noteEditor" class="modalDialog">
             <form id="noteEditorForm" onsubmit="return false;">
