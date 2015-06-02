@@ -9,6 +9,8 @@ $(document).ready(function() {
 function NoteApp() {
     console.log("initializing note app");
 
+    this.notesSortOrder = this.notesSortOrders.DUE_DATE;
+
     var DateFormats = {
         short: "DD.MM.YYYY"
     };
@@ -49,11 +51,13 @@ NoteApp.prototype = {
     createNotesHtml_T: undefined,
     noteEditor: undefined,
 
-    NSO_DUE_DATE: "DUE_DATE",
-    NSO_FINISH_DATE: "FINISH_DATE",
-    NSO_CREATION_DATE: "CREATION_DATE",
-    NSO_IMPORTANCE: "IMPORTANCE",
-    notesSortOrder: this.NSO_DUE_DATE,
+    notesSortOrders: {
+        DUE_DATE: "DUE_DATE",
+        FINISH_DATE: "FINISH_DATE",
+        CREATION_DATE: "CREATION_DATE",
+        IMPORTANCE: "IMPORTANCE"
+    },
+    notesSortOrder: undefined,
 
     showFinishedNotes: false
 }
@@ -68,16 +72,16 @@ NoteApp.prototype.registerEvents = function registerEvents () {
     });
 
     $("#btnSortDueDate").bind("click", function() {
-        noteApp.setNotesSortOrder(noteApp.NSO_DUE_DATE);
+        noteApp.setNotesSortOrder(noteApp.notesSortOrders.DUE_DATE);
     });
     $("#btnSortFinishDate").bind("click", function() {
-        noteApp.setNotesSortOrder(noteApp.NSO_FINISH_DATE);
+        noteApp.setNotesSortOrder(noteApp.notesSortOrders.FINISH_DATE);
     });
     $("#btnSortCreationDate").bind("click", function() {
-        noteApp.setNotesSortOrder(noteApp.NSO_CREATION_DATE);
+        noteApp.setNotesSortOrder(noteApp.notesSortOrders.CREATION_DATE);
     });
     $("#btnSortImportance").bind("click", function() {
-        noteApp.setNotesSortOrder(noteApp.NSO_IMPORTANCE);
+        noteApp.setNotesSortOrder(noteApp.notesSortOrders.IMPORTANCE);
     });
 
     $("#btnShowFinished").bind("click", function() {
@@ -201,21 +205,21 @@ NoteApp.prototype.setNotesSortOrder = function setNotesSortOrder(notesSortOrder)
     this.notesSortOrder = notesSortOrder;
     this.renderNotes();
 
-    $("#btnSortDueDate").toggleClass("selected", this.NSO_DUE_DATE == notesSortOrder);
-    $("#btnSortFinishDate").toggleClass("selected", this.NSO_FINISH_DATE == notesSortOrder);
-    $("#btnSortCreationDate").toggleClass("selected", this.NSO_CREATION_DATE == notesSortOrder);
-    $("#btnSortImportance").toggleClass("selected", this.NSO_IMPORTANCE == notesSortOrder);
+    $("#btnSortDueDate").toggleClass("selected", this.notesSortOrders.DUE_DATE == notesSortOrder);
+    $("#btnSortFinishDate").toggleClass("selected", this.notesSortOrders.FINISH_DATE == notesSortOrder);
+    $("#btnSortCreationDate").toggleClass("selected", this.notesSortOrders.CREATION_DATE == notesSortOrder);
+    $("#btnSortImportance").toggleClass("selected", this.notesSortOrders.IMPORTANCE == notesSortOrder);
 }
 
 NoteApp.prototype.compareNotes = function compareNotes(note1, note2) {
     switch (this.notesSortOrder) {
-        case this.NSO_DUE_DATE:
+        case this.notesSortOrders.DUE_DATE:
             return new Date(note1.duedate) - new Date(note2.duedate);
-        case this.NSO_FINISH_DATE:
+        case this.notesSortOrders.FINISH_DATE:
             return new Date(note1.finishdate) - new Date(note2.finishdate);
-        case this.NSO_CREATION_DATE:
+        case this.notesSortOrders.CREATION_DATE:
             return new Date(note1.creationdate) - new Date(note2.creationdate);
-        case this.NSO_IMPORTANCE:
+        case this.notesSortOrders.IMPORTANCE:
             return note2.importance - note1.importance;
         default:
             note1.id - note2.id;
