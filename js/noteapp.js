@@ -35,6 +35,30 @@ function NoteApp() {
 
     this.createNotesHtml_T = Handlebars.compile($("#noteListTemplate").html());
 
+    this.registerEvents();
+
+    this.noteEditor = new NoteEditor(this) ; // init note editor
+
+    this.loadNotes();
+    this.renderNotes();
+}
+
+NoteApp.prototype = {
+    storageKey: "notes",
+    notes: new Array(),
+    createNotesHtml_T: undefined,
+    noteEditor: undefined,
+
+    NSO_DUE_DATE: "DUE_DATE",
+    NSO_FINISH_DATE: "FINISH_DATE",
+    NSO_CREATION_DATE: "CREATION_DATE",
+    NSO_IMPORTANCE: "IMPORTANCE",
+    notesSortOrder: this.NSO_DUE_DATE,
+
+    showFinishedNotes: false
+}
+
+NoteApp.prototype.registerEvents = function registerEvents () {
     $("#btnCreateNote").bind("click", function() {
         noteApp.createNote();
     });
@@ -61,25 +85,17 @@ function NoteApp() {
         $("#btnShowFinished").toggleClass("selected", noteApp.showFinishedNotes);
     });
 
-    this.noteEditor = new NoteEditor(this) ; // init note editor
+    $("#noteList").on("click", "input.editbutton", function(event) {
+        if (event.target.dataset.noteid) {
+            noteApp.editNote(event.target.dataset.noteid);
+        }
+    });
 
-    this.loadNotes();
-    this.renderNotes();
-}
-
-NoteApp.prototype = {
-    storageKey: "notes",
-    notes: new Array(),
-    createNotesHtml_T: undefined,
-    noteEditor: undefined,
-
-    NSO_DUE_DATE: "DUE_DATE",
-    NSO_FINISH_DATE: "FINISH_DATE",
-    NSO_CREATION_DATE: "CREATION_DATE",
-    NSO_IMPORTANCE: "IMPORTANCE",
-    notesSortOrder: this.NSO_DUE_DATE,
-
-    showFinishedNotes: false
+    $("#noteList").on("click", "input:checkbox", function(event) {
+        if (event.target.dataset.noteid) {
+            noteApp.toggleFinishdate(event.target.dataset.noteid);
+        }
+    });
 }
 
 NoteApp.prototype.switchStyle = function switchStyle (cssFileName) {
@@ -112,16 +128,15 @@ NoteApp.prototype.editNote = function editNote(noteId) {
 }
 
 /**
- * Sets finishdate on given note to current date or resets finishdate.
+ * Sets or resets finishdate on given note based on current finishdate value.
  *
  * @param noteId note to set or reset finishdate
- * @param reset false to set or true to reset finishdate
  */
-NoteApp.prototype.setNoteFinishdate = function setNoteFinishdate(noteId, reset) {
+NoteApp.prototype.toggleFinishdate = function toggleFinishdate(noteId) {
     var note = this.getNote(noteId);
 
     if (note) {
-        note.finishdate = reset ? null : new Date();
+        note.finishdate = note.finishdate ? null : new Date();
         this.saveNotes();
         this.renderNotes();
     }

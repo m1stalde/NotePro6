@@ -88,16 +88,12 @@
                     </div>
                     <div class="row">
                         <div class="col col-1">
-                            {{#if finishdate}}
-                                <input type="checkbox" onchange="noteApp.setNoteFinishdate({{id}}, true)" checked>
-                            {{else}}
-                                <input type="checkbox" onchange="noteApp.setNoteFinishdate({{id}}, false)">
-                            {{/if}}
+                            <input type="checkbox" data-noteid="{{id}}" {{#if finishdate}}checked{{/if}}>
                             <span>{{formatDate finishdate 'short'}}</span>
                         </div>
                         <div class="col col-2 col-description">{{description}}</div>
                         <div class="col col-3 col-editbutton">
-                            <input class="editbutton" type="button" value="Edit" onclick="noteApp.editNote({{id}})">
+                            <input class="editbutton" type="button" value="Edit" data-noteid="{{id}}">
                         </div>
                     </div>
                 </article>
