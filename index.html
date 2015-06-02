@@ -78,7 +78,7 @@
             {{#each this}}
                 <article class="note" role="article">
                     <div class="row">
-                        <div class="col col-1">{{duedate}}</div>
+                        <div class="col col-1">{{formatDate duedate 'short'}}</div>
                         <div class="col col-2 col-title">{{title}}</div>
                         <div class="col col-3 col-importance">
                             {{#for 0 importance 1}}
@@ -89,11 +89,11 @@
                     <div class="row">
                         <div class="col col-1">
                             {{#if finishdate}}
-                                <input type="checkbox" checked>
+                                <input type="checkbox" onchange="noteApp.setNoteFinishdate({{id}}, true)" checked>
                             {{else}}
-                                <input type="checkbox">
+                                <input type="checkbox" onchange="noteApp.setNoteFinishdate({{id}}, false)">
                             {{/if}}
-                            <span>{{finishdate}}</span>
+                            <span>{{formatDate finishdate 'short'}}</span>
                         </div>
                         <div class="col col-2 col-description">{{description}}</div>
                         <div class="col col-3 col-editbutton">
@@ -107,6 +107,7 @@
         <!-- load javascript after page load -->
         <script src="lib/jquery-2.1.4.min.js"></script>
         <script src="lib/modernizr-2.8.3.min.js"></script>
+        <script src="lib/moment-2.10.3.js"></script>
         <script src="lib/handlebars-v3.0.3.js"></script>
         <script src="js/note.js"></script>
         <script src="js/noteeditor.js"></script>

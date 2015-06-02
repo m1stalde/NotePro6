@@ -47,7 +47,7 @@ NoteEditor.prototype.editNote = function editNote(note) {
     editorForm.elements["title"].value = note.title ? note.title : "";
     editorForm.elements["description"].value = note.description ? note.description : "";
     //editorForm.elements["importance"].value = note.rating; // TODO implement rating
-    editorForm.elements["duedate"].value = note.duedate ? note.duedate : "";
+    editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format("DD.MM.YYYY") : "";
 
     this.showEditor();
 }

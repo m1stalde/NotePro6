@@ -9,6 +9,23 @@ $(document).ready(function() {
 function NoteApp() {
     console.log("initializing note app");
 
+    var DateFormats = {
+        short: "DD.MM.YYYY"
+    };
+
+    Handlebars.registerHelper("formatDate", function(datetime, format) {
+        if (!datetime) {
+            return "";
+        }
+        else if (moment) {
+            format = DateFormats[format] || format;
+            return moment(datetime).format(format);
+        }
+        else {
+            return datetime;
+        }
+    });
+
     Handlebars.registerHelper('for', function(from, to, incr, block) {
         var accum = '';
         for(var i = from; i < to; i += incr)
@@ -87,12 +104,26 @@ NoteApp.prototype.addNote = function addNote(note) {
 }
 
 NoteApp.prototype.editNote = function editNote(noteId) {
-    var result = $.grep(this.notes, function(e) { return e.id == noteId; });
+    var note = this.getNote(noteId);
 
-    if (result.length == 1) {
-        this.noteEditor.editNote(result[0]);
-    } else {
-        console.log("note with id " + noteId + " not found");
+    if (note) {
+        this.noteEditor.editNote(note);
+    }
+}
+
+/**
+ * Sets finishdate on given note to current date or resets finishdate.
+ *
+ * @param noteId note to set or reset finishdate
+ * @param reset false to set or true to reset finishdate
+ */
+NoteApp.prototype.setNoteFinishdate = function setNoteFinishdate(noteId, reset) {
+    var note = this.getNote(noteId);
+
+    if (note) {
+        note.finishdate = reset ? null : new Date();
+        this.saveNotes();
+        this.renderNotes();
     }
 }
 
@@ -100,9 +131,27 @@ NoteApp.prototype.createNote = function createNote() {
     this.noteEditor.createNote();
 }
 
-/*NoteApp.prototype.getNote = function getNote(noteId) {
-    this.showEditor();
-}*/
+/**
+ * Gets note by id and returns null if note not found or found multiple times.
+ *
+ * @param noteId note id to search
+ * @returns Note or null
+ */
+NoteApp.prototype.getNote = function getNote(noteId) {
+    var note = null;
+
+    var result = $.grep(this.notes, function(e) { return e.id == noteId; });
+
+    if (result.length === 0) {
+        console.log("note with id " + noteId + " not found");
+    } else if (result.length > 1) {
+        console.log("note with id " + noteId + " found " + result.length + " times");
+    } else {
+        note = result[0];
+    }
+
+    return note;
+}
 
 NoteApp.prototype.renderNotes = function renderNotes() {
     var compareNotesFunc = this.compareNotes.bind(this);
@@ -113,6 +162,7 @@ NoteApp.prototype.renderNotes = function renderNotes() {
 
 NoteApp.prototype.loadNotes = function loadNotes() {
     var notesJSON = localStorage.getItem(this.storageKey)
+    console.log("load notes: " + notesJSON);
 
     if (notesJSON) {
         var storageNotes = JSON.parse(notesJSON);
@@ -127,6 +177,7 @@ NoteApp.prototype.loadNotes = function loadNotes() {
 
 NoteApp.prototype.saveNotes = function saveNotes() {
     var notesJSON = JSON.stringify(this.notes);
+    console.log("save notes: " + notesJSON);
     localStorage.setItem(this.storageKey, notesJSON);
 }
 
