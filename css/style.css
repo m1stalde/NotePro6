@@ -9,21 +9,27 @@
 
 /* note editor */
 
+/* display glass pane in viewport */
 .modalDialog {
     visibility: hidden;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
     z-index: 1000;
+
+    /* display flex to center dialog form horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* center dialog form horizontally and vertically */
 .modalDialog>form {
-    position: absolute;
-    left: 10em;
-    top: 10em;
-    right: 10em;
+    margin-left: 5em;
+    margin-right: 5em;
+    flex: 1 1;
     min-width: 35em;
 }
 
