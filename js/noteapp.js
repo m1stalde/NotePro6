@@ -174,9 +174,13 @@ NoteApp.prototype.getNote = function getNote(noteId) {
 }
 
 NoteApp.prototype.renderNotes = function renderNotes() {
-    var compareNotesFunc = this.compareNotes.bind(this);
     var filteredNotes = this.filterNotes(this.notes);
-    filteredNotes.sort(compareNotesFunc);
+
+    var noteApp = this;
+    filteredNotes.sort(function(note1, note2) {
+        return noteApp.compareNotes(note1, note2)
+    });
+
     $("#noteList").html(this.createNotesHtml_T(filteredNotes));
 }
 
