@@ -8,7 +8,7 @@ function NoteEditor(noteApp) {
 
     this.noteApp = noteApp;
     var noteEditor = this;
-    
+
     $("#btnCloseEditor").bind("click", function() {
         noteEditor.hideEditor();
     });
@@ -28,11 +28,11 @@ NoteEditor.prototype = {
 }
 
 NoteEditor.prototype.hideEditor = function hideEditor() {
-    $("#noteEditor")[0].style.visibility = "hidden"; // TODO: warum ist [0] nötig?
+    $("#noteEditor").css("visibility", "hidden");
 }
 
 NoteEditor.prototype.showEditor = function showEditor() {
-    $("#noteEditor")[0].style.visibility = "visible"; // TODO: warum ist [0] nötig?
+    $("#noteEditor").css("visibility", "visible");
 }
 
 NoteEditor.prototype.createNote = function createNote() {
@@ -42,7 +42,8 @@ NoteEditor.prototype.createNote = function createNote() {
 NoteEditor.prototype.editNote = function editNote(note) {
     this.note = note;
 
-    var editorForm = $("#noteEditorForm")[0];  // TODO: warum ist [0] nötig?
+    // select first jQuery element found
+    var editorForm = $("#noteEditorForm")[0];
 
     editorForm.elements["title"].value = note.title ? note.title : "";
     editorForm.elements["description"].value = note.description ? note.description : "";
@@ -53,7 +54,8 @@ NoteEditor.prototype.editNote = function editNote(note) {
 }
 
 NoteEditor.prototype.saveNote = function saveNote() {
-    var editorForm = $("#noteEditorForm")[0];  // TODO: warum ist [0] nö
+    // select first jQuery element found
+    var editorForm = $("#noteEditorForm")[0];
 
     this.note.title = editorForm.elements["title"].value;
     this.note.description = editorForm.elements["description"].value;
