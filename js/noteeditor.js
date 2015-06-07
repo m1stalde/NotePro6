@@ -1,69 +1,83 @@
 /**
- * Created by Marcel on 30.05.2015.
+ * Note Editor Class to interact with note editor ui.
  */
 
+var noteEditorModule = (function() {
+    "use strict";
 
-function NoteEditor(noteApp) {
-    console.log("initializing note editor");
+    function NoteEditor(noteList) {
+        console.log("initializing note editor");
 
-    this.noteApp = noteApp;
-    var noteEditor = this;
+        this.note = null;
+        this.noteList = noteList;
+        var noteEditor = this;
 
-    $("#btnCloseEditor").bind("click", function() {
-        noteEditor.hideEditor();
-    });
+        $("#btnCloseEditor").bind("click", function() {
+            noteEditor.hideEditor();
+        });
 
-    $("#btnSaveNote").bind("click", function() {
-        noteEditor.saveNote();
-    });
+        $("#btnSaveNote").bind("click", function() {
+            noteEditor.saveNote();
+        });
 
-    $("#btnCancelNote").bind("click", function() {
-        noteEditor.hideEditor();
-    });
-}
+        $("#btnCancelNote").bind("click", function() {
+            noteEditor.hideEditor();
+        });
+    }
 
-NoteEditor.prototype = {
-    note: null,
-    noteApp: null
-}
+    NoteEditor.prototype.hideEditor = function hideEditor() {
+        $("#noteEditor").css("visibility", "hidden");
+    }
 
-NoteEditor.prototype.hideEditor = function hideEditor() {
-    $("#noteEditor").css("visibility", "hidden");
-}
+    NoteEditor.prototype.showEditor = function showEditor() {
+        $("#noteEditor").css("visibility", "visible");
+    }
 
-NoteEditor.prototype.showEditor = function showEditor() {
-    $("#noteEditor").css("visibility", "visible");
-}
+    /**
+     * Opens note editor with default values.
+     */
+    NoteEditor.prototype.createNote = function createNote() {
+        var newNote = new noteModule.Note();
 
-NoteEditor.prototype.createNote = function createNote() {
-    this.editNote(new Note());
-}
+        newNote.duedate = new Date().toDateString();
+        newNote.importance = 3;
 
-NoteEditor.prototype.editNote = function editNote(note) {
-    this.note = note;
+        this.editNote(newNote);
+    }
 
-    // select first jQuery element found
-    var editorForm = $("#noteEditorForm")[0];
+    NoteEditor.prototype.editNote = function editNote(note) {
+        this.note = note;
 
-    editorForm.elements["title"].value = note.title ? note.title : "";
-    editorForm.elements["description"].value = note.description ? note.description : "";
-    //editorForm.elements["importance"].value = note.rating; // TODO implement rating
-    editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format("DD.MM.YYYY") : "";
+        // select first jQuery element found
+        var editorForm = $("#noteEditorForm")[0];
 
-    this.showEditor();
-}
+        editorForm.elements["title"].value = note.title ? note.title : "";
+        editorForm.elements["description"].value = note.description ? note.description : "";
+        //editorForm.elements["importance"].value = note.rating; // TODO implement rating
+        editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format("DD.MM.YYYY") : "";
 
-NoteEditor.prototype.saveNote = function saveNote() {
-    // select first jQuery element found
-    var editorForm = $("#noteEditorForm")[0];
+        this.showEditor();
+    }
 
-    this.note.title = editorForm.elements["title"].value;
-    this.note.description = editorForm.elements["description"].value;
-    //this.importance = editorForm.elements["importance"].value; // TODO implement rating
-    this.note.importance = 3;
-    this.note.duedate = editorForm.elements["duedate"].value;
+    NoteEditor.prototype.saveNote = function saveNote() {
+        // select first jQuery element found
+        var editorForm = $("#noteEditorForm")[0];
 
-    this.noteApp.addNote(this.note);
-    this.hideEditor();
-    this.note = null;
-}
+        this.note.title = editorForm.elements["title"].value;
+        this.note.description = editorForm.elements["description"].value;
+        //this.importance = editorForm.elements["importance"].value; // TODO implement rating
+        this.note.importance = 3;
+        this.note.duedate = moment(editorForm.elements["duedate"].value, "DD.MM.YYYY");
+
+        this.noteList.addNote(this.note);
+        this.hideEditor();
+        this.note = null;
+    }
+
+    /**
+     * Returns NoteEditor constructor function.
+     */
+    return {
+        NoteEditor: NoteEditor
+    };
+})();

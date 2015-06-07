@@ -1,22 +1,26 @@
 /**
- * Created by Marcel on 30.05.2015.
+ * Note Class.
  */
 
-function Note(title, description, importance, duedate, finishdate) {
+var noteModule = (function() {
+    "use strict";
 
-    this.title = title;
-    this.description = description;
-    this.importance = importance;
-    this.duedate = duedate;
-    this.finishdate = finishdate;
-}
+    function Note(title, description, importance, duedate, finishdate) {
 
-Note.prototype = {
-    id: null,
-    title: "",
-    description: "",
-    importance: 3,
-    duedate: null,
-    finishdate: null,
-    creationdate: new Date().toDateString()
-}
+        this.title = title;
+        this.description = description;
+        this.importance = importance;
+        this.duedate = duedate;
+        this.finishdate = finishdate;
+
+        this.id = null;
+        this.creationdate = new Date().toDateString();
+    }
+
+    /**
+     * Returns Note constructor function.
+     */
+    return {
+        Note: Note
+    };
+})();
