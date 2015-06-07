@@ -121,6 +121,7 @@ NoteApp.prototype.addNote = function addNote(note) {
 
     this.saveNotes();
     this.renderNotes();
+    this.wiggleNote(note.id);
 }
 
 NoteApp.prototype.editNote = function editNote(noteId) {
@@ -242,4 +243,8 @@ NoteApp.prototype.filterNotes = function filterNotes(notes) {
     } else {
         return notes.filter(function(e) { return !(e.finishdate) });
     }
+}
+
+NoteApp.prototype.wiggleNote = function wiggleNote(noteId) {
+    $("#note-"+noteId).addClass("wiggleNote");
 }
