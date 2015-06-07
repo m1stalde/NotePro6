@@ -8,7 +8,7 @@ function NoteEditor(noteApp) {
 
     this.noteApp = noteApp;
     var noteEditor = this;
-
+    
     $("#btnCloseEditor").bind("click", function() {
         noteEditor.hideEditor();
     });
