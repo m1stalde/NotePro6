@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    min-width: 20em;
 }
 
 .container {
@@ -59,7 +60,8 @@ body {
 /* note editor */
 
 .modalDialog>form {
-    left: 0em;
-    top: 0em;
-    right: 0em;
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    right: 1em;
 }

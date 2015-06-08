@@ -48,14 +48,6 @@
     align-items: center;
 }
 
-/* center dialog form horizontally and vertically */
-.modalDialog>form {
-    margin-left: 5em;
-    margin-right: 5em;
-    flex: 1 1;
-    min-width: 35em;
-}
-
 .noteEditor textarea[name="description"] {
     height: 6em;
 }
@@ -69,32 +61,4 @@
 /* align checkbox left */
 .col>input[type="checkbox"] {
     margin-left: 0;
-}
-
-
-/* bolt rating */
-
-.importance {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-}
-.importance span.bolt {
-    font-family: FontAwesome;
-    font-weight: normal;
-    font-style: normal;
-    display: inline-block;
-    font-size: 2em;
-}
-.importance span.bolt:hover {
-    cursor: pointer;
-}
-.importance span.bolt:before {
-    content: "\f0e7";
-    padding-right: 5px;
-    color: #9d9d9d;
-}
-.importance span.bolt:hover:before,
-.importance span.bolt:hover ~ span.bolt:before {
-    content: "\f0e7";
-    color: #000000;
 }

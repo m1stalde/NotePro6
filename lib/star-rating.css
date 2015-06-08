@@ -1,0 +1,43 @@
+/* star rating based on http://code.stephenmorley.org/html-and-css/star-rating-widget/ */
+
+.starRating {
+  margin: 0;
+  padding: 0;
+}
+
+.starRating:not(old){
+  display        : inline-block;
+  width          : 8em;
+  height         : 2em;
+  overflow       : hidden;
+  vertical-align : bottom;
+  border         : none;
+}
+
+.starRating:not(old) > input{
+  margin-right : -100%;
+  opacity      : 0;
+}
+
+.starRating:not(old) > label{
+  display         : block;
+  float           : right;
+  position        : relative;
+}
+
+.starRating:not(old) > label:before{
+  display         : block;
+  width           : 0.8em;
+  height          : 2em;
+  font-family     : FontAwesome;
+  font-size       : 2em;
+  content         : "\f0e7";
+  opacity         : 0.5;
+  transition      : opacity 0.2s linear;
+}
+
+.starRating:not(old) > label:hover:before,
+.starRating:not(old) > label:hover ~ label:before,
+.starRating:not(:hover) > :checked ~ label:before{
+  opacity : 1;
+}

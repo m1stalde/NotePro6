@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    min-width: 50em;
 }
 
 .container {
@@ -46,7 +47,6 @@ body {
 /* note list */
 
 .note {
-    min-width: 50em;
     border-top: 1px solid;
     padding: 1em;
 }
@@ -79,3 +79,14 @@ body {
 .editorbuttons {
     float: right;
 }
+
+
+/* note editor */
+
+/* center dialog form horizontally and vertically */
+.modalDialog>form {
+    margin-left: 5em;
+    margin-right: 5em;
+    flex: 1 1;
+}
+

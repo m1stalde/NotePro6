@@ -23,6 +23,12 @@ var noteEditorModule = (function() {
         $("#btnCancelNote").bind("click", function() {
             noteEditor.hideEditor();
         });
+
+        $("#noteEditorImportance").on("click", "span.bolt", function(event) {
+            if (event.target.dataset.importance) {
+                noteEditor.setImportance(event.target.dataset.importance);
+            }
+        });
     }
 
     NoteEditor.prototype.hideEditor = function hideEditor() {
@@ -53,8 +59,11 @@ var noteEditorModule = (function() {
 
         editorForm.elements["title"].value = note.title ? note.title : "";
         editorForm.elements["description"].value = note.description ? note.description : "";
-        //editorForm.elements["importance"].value = note.rating; // TODO implement rating
         editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format("DD.MM.YYYY") : "";
+
+        // check importance radio button
+        var importance = note.importance ? note.importance : 3;
+        $("#noteEditorForm #noteEditorImportance input[value="+importance+"]").prop('checked', true);
 
         this.showEditor();
     }
@@ -65,13 +74,20 @@ var noteEditorModule = (function() {
 
         this.note.title = editorForm.elements["title"].value;
         this.note.description = editorForm.elements["description"].value;
-        //this.importance = editorForm.elements["importance"].value; // TODO implement rating
-        this.note.importance = 3;
         this.note.duedate = moment(editorForm.elements["duedate"].value, "DD.MM.YYYY");
+
+        // get checked importance radio button value
+        var importance = $("#noteEditorForm #noteEditorImportance input:checked").val();
+        this.note.importance = importance;
 
         this.noteList.addNote(this.note);
         this.hideEditor();
         this.note = null;
+    }
+
+    NoteEditor.prototype.setImportance = function setImportance(importance) {
+        console.log("set importance " + importance);
+        this.note.importance = importance;
     }
 
     /**

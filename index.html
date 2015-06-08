@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Note Pro</title>
         <link rel="stylesheet" href="lib/font-awesome-4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="lib/star-rating.css">
         <link rel="stylesheet" href="css/style.css">
         <!-- <link rel="stylesheet" href="css/layout-wide.css"> -->
         <link rel="stylesheet" media="(min-width: 600px)" href="css/layout-wide.css">
@@ -55,9 +56,18 @@
                     <div class="row">
                         <div class="col col-1">Wichtigkeit</div>
                         <div class="col col-2">
-                            <span class="importance">
-                                <span class="bolt"></span><span class="bolt"></span><span class="bolt"></span><span class="bolt"></span><span class="bolt"></span>
-                            </span>
+                             <fieldset id="noteEditorImportance" class="starRating">
+                                <input id="rating5" type="radio" name="importance" value="5"/>
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="importance" value="4"/>
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="importance" value="3"/>
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="importance" value="2"/>
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="importance" value="1"/>
+                                <label for="rating1">1</label>
+                            </fieldset>
                         </div>
                     </div>
                     <div class="row">
