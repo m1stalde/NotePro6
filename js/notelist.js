@@ -108,8 +108,8 @@ var noteListModule = (function() {
         }
 
         if (!this.notes || this.notes.length == 0) {
-            this.addNote(new Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", 5, "2015-02-01", "2015-05-27"));
-            this.addNote(new Note("Titel", "Beschreibung", 3, "2015-03-02", "2015-02-23"));
+            this.addNote(new noteModule.Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", 5, "2015-02-01", "2015-05-27"));
+            this.addNote(new noteModule.Note("Titel", "Beschreibung", 3, "2015-03-02", "2015-02-23"));
         }
     }
 

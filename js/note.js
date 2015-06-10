@@ -14,7 +14,7 @@ var noteModule = (function() {
         this.finishdate = finishdate;
 
         this.id = null;
-        this.creationdate = new Date().toDateString();
+        this.creationdate = null;
     }
 
     /**

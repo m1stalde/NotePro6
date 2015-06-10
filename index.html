@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Note Pro</title>
         <link rel="stylesheet" href="lib/font-awesome-4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
         <link rel="stylesheet" href="lib/star-rating.css">
         <link rel="stylesheet" href="css/style.css">
         <!-- <link rel="stylesheet" href="css/layout-wide.css"> -->
@@ -72,7 +73,7 @@
                     </div>
                     <div class="row">
                         <div class="col col-1">Erledigt bis</div>
-                        <div class="col col-2"><input type="text" name="duedate" required></div>
+                        <div class="col col-2"><input type="text" name="duedate" class="datepicker"></div>
                     </div>
                     <div class="row">
                         <div class="col col-2 col-editorbuttons">
@@ -114,7 +115,8 @@
 
         <!-- load javascript after page load -->
         <script src="lib/jquery-2.1.4.min.js"></script>
-        <script src="lib/modernizr-2.8.3.min.js"></script>
+        <script src="lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+        <script src="lib/jquery-ui-1.11.4.custom/i18n/datepicker-de.js"></script>
         <script src="lib/moment-2.10.3.js"></script>
         <script src="lib/handlebars-v3.0.3.js"></script>
         <script src="js/note.js"></script>

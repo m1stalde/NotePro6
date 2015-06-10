@@ -62,3 +62,8 @@
 .col>input[type="checkbox"] {
     margin-left: 0;
 }
+
+.datepicker {
+    width: 6em;
+    max-width: 6em;
+}

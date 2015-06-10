@@ -10,6 +10,7 @@ var noteEditorModule = (function() {
 
         this.note = null;
         this.noteList = noteList;
+        this.dateFormat = "DD.MM.YYYY";
         var noteEditor = this;
 
         $("#btnCloseEditor").bind("click", function() {
@@ -29,6 +30,8 @@ var noteEditorModule = (function() {
                 noteEditor.setImportance(event.target.dataset.importance);
             }
         });
+
+        $(".datepicker").datepicker();
     }
 
     NoteEditor.prototype.hideEditor = function hideEditor() {
@@ -44,8 +47,10 @@ var noteEditorModule = (function() {
      */
     NoteEditor.prototype.createNote = function createNote() {
         var newNote = new noteModule.Note();
+        var currentDate = new Date().toISOString();
 
-        newNote.duedate = new Date().toDateString();
+        newNote.creationdate = currentDate;
+        newNote.duedate = currentDate;
         newNote.importance = 3;
 
         this.editNote(newNote);
@@ -59,7 +64,7 @@ var noteEditorModule = (function() {
 
         editorForm.elements["title"].value = note.title ? note.title : "";
         editorForm.elements["description"].value = note.description ? note.description : "";
-        editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format("DD.MM.YYYY") : "";
+        editorForm.elements["duedate"].value = note.duedate ? moment(note.duedate).format(this.dateFormat) : "";
 
         // check importance radio button
         var importance = note.importance ? note.importance : 3;
@@ -74,7 +79,7 @@ var noteEditorModule = (function() {
 
         this.note.title = editorForm.elements["title"].value;
         this.note.description = editorForm.elements["description"].value;
-        this.note.duedate = moment(editorForm.elements["duedate"].value, "DD.MM.YYYY");
+        this.note.duedate = moment(editorForm.elements["duedate"].value, this.dateFormat).format("YYYY-MM-DD");
 
         // get checked importance radio button value
         var importance = $("#noteEditorForm #noteEditorImportance input:checked").val();
