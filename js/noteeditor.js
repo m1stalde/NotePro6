@@ -31,7 +31,10 @@ var noteEditorModule = (function() {
             }
         });
 
-        $(".datepicker").datepicker();
+        $(".datepicker").datepicker({
+            showOn: "both",
+            buttonText: "<i class='fa fa-calendar'></i>"
+        });
     }
 
     NoteEditor.prototype.hideEditor = function hideEditor() {
