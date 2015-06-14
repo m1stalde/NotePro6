@@ -25,7 +25,7 @@ function publicLoadNotes(callback) {
                 if (callback) callback(data.toString());
             });
         } else {
-            if (callback) callback("[]");
+            if (callback) callback();
         }
     });
 

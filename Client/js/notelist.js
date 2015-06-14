@@ -112,7 +112,7 @@ var noteListModule = (function() {
                     noteList.notes.push.apply(noteList.notes, storageNotes); // add storage notes to notes array
                     noteList.notifyNotePersistenceListener("load", true, "Daten erfolgreich geladen.");
                 } else {
-                    noteList.notifyNotePersistenceListener("load", true, "Keine Daten geladen.");
+                    noteList.notifyNotePersistenceListener("load", true, "Keine Daten vorhanden.");
                 }
             })
             .fail(function(e) {

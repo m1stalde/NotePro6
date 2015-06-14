@@ -40,7 +40,7 @@ app.post('/notes', urlencodedParser, function(req, res){
 app.use(express.static('../Client'));
 
 // startup server
-var server = app.listen(6000, "localhost", function () {
+var server = app.listen(3000, "localhost", function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log('server listening at http://%s:%s', host, port);
