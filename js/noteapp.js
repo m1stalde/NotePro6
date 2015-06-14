@@ -19,10 +19,11 @@
 
         noteList = new noteListModule.NoteList();
         noteList.setNoteUpdateListener(noteUpdated);
+        noteList.setNotePersistenceListener(persistEvent);
 
         registerEvents(noteList);
 
-        renderNotes();
+        noteList.loadNotes();
     }
 
     function createNoteListTemplate() {
@@ -146,6 +147,15 @@
     function wiggleNote(noteId) {
         console.log("wiggle note " + noteId);
         $("#note-"+noteId).addClass("wiggleNote");
+    }
+
+    function persistEvent(operation, success, message) {
+        if ("load" == operation && success) {
+            renderNotes();
+        }
+
+        // TODO display inline message instead od alert
+        alert(message);
     }
 
 })(jQuery, window, document);

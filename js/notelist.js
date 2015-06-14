@@ -12,14 +12,14 @@ var noteListModule = (function() {
         console.log("initializing note list");
 
         this.notes = new Array();
+        this.serverUrl = "/notes";
         this.storageKey = "notes";
         this.notesSortOrder = this.notesSortOrders.DUE_DATE;
         this.showFinishedNotes = false;
 
         this.noteEditor = new noteEditorModule.NoteEditor(this) ; // init note editor
         this.noteUpdateListener = null;
-
-        this.loadNotes();
+        this.notePersistenceListener = null;
     }
 
     NoteList.prototype.notesSortOrders = {
@@ -98,25 +98,54 @@ var noteListModule = (function() {
         return note;
     }
 
+    /**
+     * Loads notes from server and notifies note persistence listener on success or error case.
+     */
     NoteList.prototype.loadNotes = function loadNotes() {
-        var notesJSON = localStorage.getItem(this.storageKey)
-        console.log("load notes: " + notesJSON);
+        var noteList = this;
 
-        if (notesJSON) {
-            var storageNotes = JSON.parse(notesJSON);
-            this.notes.push.apply(this.notes, storageNotes); // add storage notes to notes array
-        }
+        $.get(this.serverUrl)
+            .done(function(data) {
+                // server request successful, check if result contains notes
+                if (data && data.notes) {
+                    var storageNotes = JSON.parse(data.notes);
+                    noteList.notes.push.apply(noteList.notes, storageNotes); // add storage notes to notes array
+                    noteList.notifyNotePersistenceListener("load", true, "Daten erfolgreich geladen.");
+                } else {
+                    noteList.notifyNotePersistenceListener("load", true, "Keine Daten geladen.");
+                }
+            })
+            .fail(function(e) {
+                // server request failed
+                console.log(e);
+                noteList.notifyNotePersistenceListener("load", false, "Fehler beim Laden der Daten.");
+            });
 
-        if (!this.notes || this.notes.length == 0) {
-            this.addNote(new noteModule.Note("CAS FEE Selbststudium / Projekt Aufgabe erledigen", "HTML für die note App erstellen.\nCSS erstellen für die Note App.", 5, "2015-02-01", "2015-05-27"));
-            this.addNote(new noteModule.Note("Titel", "Beschreibung", 3, "2015-03-02", "2015-02-23"));
-        }
+        //var notesJSON = localStorage.getItem(this.storageKey);
     }
 
+    /**
+     * Saves notes to server and notifies note persistence listener on success or error case.
+     */
     NoteList.prototype.saveNotes = function saveNotes() {
-        var notesJSON = JSON.stringify(this.notes);
-        console.log("save notes: " + notesJSON);
-        localStorage.setItem(this.storageKey, notesJSON);
+        var noteList = this;
+
+        var data = {
+            notes: JSON.stringify(noteList.notes)
+        }
+
+        console.log("save notes: " + data.notes);
+
+        $.post(this.serverUrl, data )
+            .done(function() {
+                noteList.notifyNotePersistenceListener("save", true, "Daten erfoglreich gespeichert.");
+            })
+            .fail(function(err) {
+                console.log(err);
+                noteList.notifyNotePersistenceListener("save", false, "Fehler beim Speichern der Daten.");
+            });
+
+        //localStorage.setItem(this.storageKey, notesJSON);
     }
 
     NoteList.prototype.setNotesSortOrder = function setNotesSortOrder(notesSortOrder) {
@@ -175,6 +204,30 @@ var noteListModule = (function() {
 
         if (this.noteUpdateListener) {
             this.noteUpdateListener(noteId);
+        }
+    }
+
+    /**
+     * Register listener to call with operation, success and message after load or save operation.
+     *
+     * @param listener
+     */
+    NoteList.prototype.setNotePersistenceListener = function setNotePersistenceListener(listener) {
+        this.notePersistenceListener = listener;
+    }
+
+    /**
+     * Notifies persistence listener.
+     *
+     * @param operation load or save
+     * @param success true or false
+     * @param message success or error message
+     */
+    NoteList.prototype.notifyNotePersistenceListener = function notifyNotePersistenceListener(operation, success, message) {
+        console.log("notify note persistence listener with message " + message);
+
+        if (this.notePersistenceListener) {
+            this.notePersistenceListener(operation, success, message);
         }
     }
 
