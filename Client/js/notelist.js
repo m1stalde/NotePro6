@@ -20,6 +20,11 @@ var noteListModule = (function() {
         this.noteEditor = new noteEditorModule.NoteEditor(this) ; // init note editor
         this.noteUpdateListener = null;
         this.notePersistenceListener = null;
+
+        var noteList = this;
+        noteEventModule.connect("ws://localhost:8080/", function (note) {
+            noteList.noteUpdated(note);
+        });
     }
 
     NoteList.prototype.notesSortOrders = {
@@ -32,20 +37,43 @@ var noteListModule = (function() {
     NoteList.prototype.addNote = function addNote(note) {
         console.log("add note " + note);
 
-        var noteId = 1;
+        var noteList = this;
 
-        if (!note.id) {
-            if (this.notes.length > 0) {
-                var maxId = Math.max.apply(Math, this.notes.map(function(note) { return note.id; }))
-                noteId = maxId + 1;
+        var data = {
+            note: JSON.stringify(note)
+        }
+
+        console.log("save note: " + data.note);
+
+        $.post(this.serverUrl, data)
+            .done(function() {
+                noteList.notifyNotePersistenceListener("save", true, "Daten erfoglreich gespeichert.");
+            })
+            .fail(function(err) {
+                console.log(err);
+                noteList.notifyNotePersistenceListener("save", false, "Fehler beim Speichern der Daten.");
+            });
+    }
+
+    NoteList.prototype.noteUpdated = function noteUpdated(note) {
+        console.log("note updated " + note);
+        var existingNote = false;
+
+        for (var i = 0; i < this.notes.length; i++) {
+            var n = this.notes[i];
+
+            // replace updated note on existing note
+            if (note && note.id && note.id === n.id) {
+                this.notes[i] = note;
+                existingNote = true;
+                break;
             }
-            note.id = noteId;
+        }
+
+        if (!existingNote) {
             this.notes.push(note);
         }
 
-        this.saveNotes();
-
-        // notify note update listener
         this.notifyNoteUpdateListener(note.id);
     }
 
@@ -67,8 +95,7 @@ var noteListModule = (function() {
 
         if (note) {
             note.finishdate = note.finishdate ? null : new Date();
-            this.saveNotes();
-            this.notifyNoteUpdateListener(note.id);
+            this.addNote(note);
         }
     }
 
@@ -108,8 +135,7 @@ var noteListModule = (function() {
             .done(function(data) {
                 // server request successful, check if result contains notes
                 if (data && data.notes) {
-                    var storageNotes = JSON.parse(data.notes);
-                    noteList.notes.push.apply(noteList.notes, storageNotes); // add storage notes to notes array
+                    noteList.notes.push.apply(noteList.notes, data.notes); // add storage notes to notes array
                     noteList.notifyNotePersistenceListener("load", true, "Daten erfolgreich geladen.");
                 } else {
                     noteList.notifyNotePersistenceListener("load", true, "Keine Daten vorhanden.");
@@ -122,30 +148,6 @@ var noteListModule = (function() {
             });
 
         //var notesJSON = localStorage.getItem(this.storageKey);
-    }
-
-    /**
-     * Saves notes to server and notifies note persistence listener on success or error case.
-     */
-    NoteList.prototype.saveNotes = function saveNotes() {
-        var noteList = this;
-
-        var data = {
-            notes: JSON.stringify(noteList.notes)
-        }
-
-        console.log("save notes: " + data.notes);
-
-        $.post(this.serverUrl, data )
-            .done(function() {
-                noteList.notifyNotePersistenceListener("save", true, "Daten erfoglreich gespeichert.");
-            })
-            .fail(function(err) {
-                console.log(err);
-                noteList.notifyNotePersistenceListener("save", false, "Fehler beim Speichern der Daten.");
-            });
-
-        //localStorage.setItem(this.storageKey, notesJSON);
     }
 
     NoteList.prototype.setNotesSortOrder = function setNotesSortOrder(notesSortOrder) {
