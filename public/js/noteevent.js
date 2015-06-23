@@ -5,7 +5,10 @@
 var noteEventModule = (function() {
     "use strict";
 
-    function publicConnect(url, onmessage) {
+    function publicConnect(onmessage) {
+        var url = "ws://" + location.host + "/";
+        console.log("connection web socket to " + url);
+
         var connection = new WebSocket(url, ['soap', 'xmpp']);
 
         // When the connection is open, send some data to the server

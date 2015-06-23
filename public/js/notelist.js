@@ -22,7 +22,7 @@ var noteListModule = (function() {
         this.notePersistenceListener = null;
 
         var noteList = this;
-        noteEventModule.connect("ws://localhost:8080/", function (note) {
+        noteEventModule.connect(function (note) {
             noteList.noteUpdated(note);
         });
     }
