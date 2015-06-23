@@ -8,24 +8,37 @@
 var noteListModule = (function() {
     "use strict";
 
+    /**
+     * Creates new empty note list.
+     *
+     * @constructor
+     */
     function NoteList() {
         console.log("initializing note list");
 
+        // init default values
         this.notes = new Array();
         this.serverUrl = "/notes";
         this.notesSortOrder = this.notesSortOrders.DUE_DATE;
         this.showFinishedNotes = false;
 
-        this.noteEditor = new noteEditorModule.NoteEditor(this) ; // init note editor
+        // init note editor
+        this.noteEditor = new noteEditorModule.NoteEditor(this);
         this.noteUpdateListener = null;
         this.notePersistenceListener = null;
 
+        // connect note event client
         var noteList = this;
         noteEventModule.connect(function (note) {
             noteList.noteUpdated(note);
         });
     }
 
+    /**
+     * Supported values for sort orders.
+     *
+     * @type {{DUE_DATE: string, FINISH_DATE: string, CREATION_DATE: string, IMPORTANCE: string}}
+     */
     NoteList.prototype.notesSortOrders = {
         DUE_DATE: "DUE_DATE",
         FINISH_DATE: "FINISH_DATE",
@@ -33,7 +46,12 @@ var noteListModule = (function() {
         IMPORTANCE: "IMPORTANCE"
     }
 
-    NoteList.prototype.addNote = function addNote(note) {
+    /**
+     * Sends updated note to server.
+     *
+     * @param note
+     */
+    NoteList.prototype.updateNote = function updateNote(note) {
         console.log("add note " + note);
 
         var noteList = this;
@@ -54,10 +72,16 @@ var noteListModule = (function() {
             });
     }
 
+    /**
+     * Adds or replaces updated note from server in note list and notifies note update listener.
+     *
+     * @param note
+     */
     NoteList.prototype.noteUpdated = function noteUpdated(note) {
         console.log("note updated " + note);
         var existingNote = false;
 
+        // search and update existing note
         for (var i = 0; i < this.notes.length; i++) {
             var n = this.notes[i];
 
@@ -69,13 +93,20 @@ var noteListModule = (function() {
             }
         }
 
+        // add note if not already exists
         if (!existingNote) {
             this.notes.push(note);
         }
 
+        // notify note update listener
         this.notifyNoteUpdateListener(note.id);
     }
 
+    /**
+     * Opens note editor.
+     *
+     * @param noteId
+     */
     NoteList.prototype.editNote = function editNote(noteId) {
         var note = this.getNote(noteId);
 
@@ -94,10 +125,13 @@ var noteListModule = (function() {
 
         if (note) {
             note.finishdate = note.finishdate ? null : new Date();
-            this.addNote(note);
+            this.updateNote(note);
         }
     }
 
+    /**
+     * Opens note editor with empty note.
+     */
     NoteList.prototype.createNote = function createNote() {
         this.noteEditor.createNote();
     }
@@ -145,15 +179,25 @@ var noteListModule = (function() {
                 console.log(e);
                 noteList.notifyNotePersistenceListener("load", false, "Fehler beim Laden der Daten.");
             });
-
-        //var notesJSON = localStorage.getItem(this.storageKey);
     }
 
+    /**
+     * Sets note sort order to be processed in render notes method.
+     *
+     * @param notesSortOrder
+     */
     NoteList.prototype.setNotesSortOrder = function setNotesSortOrder(notesSortOrder) {
         console.log("setting notes sort order to " + notesSortOrder);
         this.notesSortOrder = notesSortOrder;
     }
 
+    /**
+     * Compares given two notes based on notes sort order.
+     *
+     * @param note1
+     * @param note2
+     * @returns {number}
+     */
     NoteList.prototype.compareNotes = function compareNotes(note1, note2) {
         switch (this.notesSortOrder) {
             case this.notesSortOrders.DUE_DATE:
@@ -169,6 +213,12 @@ var noteListModule = (function() {
         }
     }
 
+    /**
+     * Filters notes based on finishdate set or not.
+     *
+     * @param notes
+     * @returns {*}
+     */
     NoteList.prototype.filterNotes = function filterNotes(notes) {
         if (this.showFinishedNotes) {
             return notes;
@@ -200,6 +250,11 @@ var noteListModule = (function() {
         this.noteUpdateListener = listener;
     }
 
+    /**
+     * Notifies note update listener.
+     *
+     * @param noteId
+     */
     NoteList.prototype.notifyNoteUpdateListener = function notifyNoteUpdateListener(noteId) {
         console.log("notify note update listener for note " + noteId);
 

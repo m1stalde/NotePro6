@@ -5,6 +5,12 @@
 var noteEditorModule = (function() {
     "use strict";
 
+    /**
+     * Creates and inits new note editor instance.
+     *
+     * @param noteList
+     * @constructor
+     */
     function NoteEditor(noteList) {
         console.log("initializing note editor");
 
@@ -31,16 +37,23 @@ var noteEditorModule = (function() {
             }
         });
 
+        // format jquery date picker
         $(".datepicker").datepicker({
             showOn: "both",
             buttonText: "<i class='fa fa-calendar'></i>"
         });
     }
 
+    /**
+     * Hides editor.
+     */
     NoteEditor.prototype.hideEditor = function hideEditor() {
         $("#noteEditor").css("visibility", "hidden");
     }
 
+    /**
+     * Displays editor.
+     */
     NoteEditor.prototype.showEditor = function showEditor() {
         $("#noteEditor").css("visibility", "visible");
     }
@@ -59,6 +72,11 @@ var noteEditorModule = (function() {
         this.editNote(newNote);
     }
 
+    /**
+     * Fills editor with given note values and display editor dialog.
+     *
+     * @param note
+     */
     NoteEditor.prototype.editNote = function editNote(note) {
         this.note = note;
 
@@ -76,10 +94,14 @@ var noteEditorModule = (function() {
         this.showEditor();
     }
 
+    /**
+     * Updates edited note with form values, updates note in note list and hides editor.
+     */
     NoteEditor.prototype.saveNote = function saveNote() {
         // select first jQuery element found
         var editorForm = $("#noteEditorForm")[0];
 
+        // copy note values
         this.note.title = editorForm.elements["title"].value;
         this.note.description = editorForm.elements["description"].value;
         this.note.duedate = moment(editorForm.elements["duedate"].value, this.dateFormat).format("YYYY-MM-DD");
@@ -88,11 +110,17 @@ var noteEditorModule = (function() {
         var importance = $("#noteEditorForm #noteEditorImportance input:checked").val();
         this.note.importance = importance;
 
-        this.noteList.addNote(this.note);
+        // update note in note list and hide editor
+        this.noteList.updateNote(this.note);
         this.hideEditor();
         this.note = null;
     }
 
+    /**
+     * Sets note importance based on bolt rating event.
+     *
+     * @param importance
+     */
     NoteEditor.prototype.setImportance = function setImportance(importance) {
         console.log("set importance " + importance);
         this.note.importance = importance;

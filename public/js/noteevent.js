@@ -1,5 +1,5 @@
 /**
- * Note Events.
+ * Module to receive note events from server through web socket connection.
  */
 
 var noteEventModule = (function() {

@@ -5,13 +5,22 @@
 ;(function($, window, document, undefined) {
     "use strict";
 
+    // note list class from note list module
     var noteList;
+
+    // handlebars template for note list entry
     var createNotesHtml_T;
 
+    /**
+     * Called after document loaded to init note app.
+     */
     $(document).ready(function() {
         init();
     });
 
+    /**
+     * Initializes notes app and loads persisted notes.
+     */
     function init() {
         console.log("initializing note app");
 
@@ -26,6 +35,11 @@
         noteList.loadNotes();
     }
 
+    /**
+     * Inits handlebars with date formats and helpers, and returns handlebars template.
+     *
+     * @returns {*}
+     */
     function createNoteListTemplate() {
         console.log("create note list template");
 
@@ -33,6 +47,7 @@
             short: "DD.MM.YYYY"
         };
 
+        // helper to format date using moment
         Handlebars.registerHelper("formatDate", function(datetime, format) {
             if (!datetime) {
                 return "";
@@ -46,6 +61,7 @@
             }
         });
 
+        // helper to display importance bolt based on importance rating
         Handlebars.registerHelper('for', function(from, to, incr, block) {
             var accum = '';
             for(var i = from; i < to; i += incr)
@@ -63,6 +79,11 @@
         return Handlebars.compile($("#noteListTemplate").html());
     }
 
+    /**
+     * Registers html events in note app.
+     *
+     * @param noteList
+     */
     function registerEvents (noteList) {
         console.log("register events");
 
@@ -105,16 +126,30 @@
         });
     }
 
+    /**
+     * Switches css style to given css file.
+     *
+     * @param cssFileName
+     */
     function switchStyle (cssFileName) {
         var link = document.getElementById("pagestyle");
         link.setAttribute('href', cssFileName);
     }
 
+    /**
+     * Gets notes from note list and render notes using handlebars template.
+     */
     function renderNotes() {
         var renderNotes = noteList.getRenderNotes();
         $("#noteList").html(createNotesHtml_T(renderNotes));
     }
 
+    /**
+     * Sets notes sort order to given sort order and renders note list.
+     *
+     * @param noteList
+     * @param notesSortOrder
+     */
     function setNotesSortOrder(noteList, notesSortOrder) {
         console.log("setting notes sort order to " + notesSortOrder);
         noteList.notesSortOrder = notesSortOrder;
@@ -126,6 +161,9 @@
         $("#btnSortImportance").toggleClass("selected", noteList.notesSortOrders.IMPORTANCE == notesSortOrder);
     }
 
+    /**
+     * Sets or resets show finished notes option and renders note list.
+     */
     function toggleShowFinishedNotes() {
         var currentValue = noteList.showFinishedNotes;
 
@@ -138,12 +176,21 @@
         renderNotes();
     }
 
+    /**
+     * Renders note list and wiggles updated note with given id.
+     *
+     * @param noteId
+     */
     function noteUpdated(noteId) {
         console.log("note updated " + noteId);
         renderNotes();
         wiggleNote(noteId);
     }
 
+    /**
+     * Wiggles note with given id.
+     * @param noteId
+     */
     function wiggleNote(noteId) {
         console.log("wiggle note " + noteId);
         $("#note-"+noteId).addClass("wiggleNote");
