@@ -8,7 +8,7 @@
 var fs = require("fs");
 
 // define defaults
-var filename = "notes.txt";
+var filename = "./data/notes.txt";
 
 var notifyNoteUpdateListener = null;
 

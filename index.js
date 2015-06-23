@@ -6,7 +6,7 @@
  */
 
 // register modules
-var notes = require("./notes");
+var notes = require("./services/noteStore.js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -47,7 +47,7 @@ app.post('/notes', urlencodedParser, function(req, res){
 });
 
 // server static content to client
-app.use(express.static('../Client'));
+app.use(express.static(__dirname + '/public'));
 
 
 // web sockets server
