@@ -149,13 +149,19 @@
         $("#note-"+noteId).addClass("wiggleNote");
     }
 
+    /**
+     * Called after load or save notes.
+     *
+     * @param operation "load" or "save"
+     * @param success true if load or save successful, false otherwise
+     * @param message user message to display
+     */
     function persistEvent(operation, success, message) {
-        if ("load" == operation && success) {
+        if (!success) {
+            alert(message);
+        } else if ("load" == operation) {
             renderNotes();
         }
-
-        // TODO display inline message instead od alert
-        alert(message);
     }
 
 })(jQuery, window, document);
