@@ -25,6 +25,7 @@ var server = http.createServer(app);
 var WebSocketServer = require('ws').Server
     , wss = new WebSocketServer({ server: server });
 
+// on client connection, log received message and send "Hello" to client
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
         console.log('received: %s', message);
@@ -32,6 +33,7 @@ wss.on('connection', function(ws) {
     ws.send(JSON.stringify({message: "Hello"}));
 });
 
+// sends given data to all clients
 wss.broadcast = function broadcast(data) {
     console.log("broadcasting data to all clients " + data);
 

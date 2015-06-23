@@ -10,8 +10,14 @@ var fs = require("fs");
 // define defaults
 var filename = "./data/notes.txt";
 
+// listener to broadcast updated notes to clients
 var notifyNoteUpdateListener = null;
 
+/**
+ * Sets notify update listener to given listener.
+ *
+ * @param listener
+ */
 function publicSetNotifyUpdateListener(listener) {
     notifyNoteUpdateListener = listener;
 }
@@ -26,7 +32,6 @@ function publicGetNotes(callback) {
         if (callback) callback(err, notes);
     });
 }
-
 
 /**
  * Saves notes to file.
@@ -49,7 +54,7 @@ function publicSaveNote(note, callback) {
 }
 
 /**
- * Loads notes from file
+ * Loads notes from file. If file is empty or doesn't exist, an empty array is returned.
  *
  * @param callback
  */
@@ -75,6 +80,12 @@ function privateLoadNotes(callback) {
 
 }
 
+/**
+ * Saves given notes to file.
+ *
+ * @param notes
+ * @param callback
+ */
 function privateSaveNotes(notes, callback) {
     console.log("saving notes to " + filename);
 
@@ -85,6 +96,16 @@ function privateSaveNotes(notes, callback) {
     });
 }
 
+/**
+ * Updates given note in given notes array.
+ * If given note has an id, the note with this id is replaced in notes array.
+ * If given note has no id, the highest note id in array plus one is given and
+ * the note is appended to given array.
+ *
+ * @param notes
+ * @param note
+ * @returns {*}
+ */
 function privateUpdateNotes(notes, note) {
     var maxNoteId = 1;
 

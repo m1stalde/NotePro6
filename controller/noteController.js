@@ -1,3 +1,9 @@
+/**
+ * Controller to get and save notes.
+ *
+ * @type {*|exports|module.exports}
+ */
+
 var store = require("../services/noteStore.js");
 
 // handle notes get request to send json string to client

@@ -13,7 +13,6 @@ var noteListModule = (function() {
 
         this.notes = new Array();
         this.serverUrl = "/notes";
-        this.storageKey = "notes";
         this.notesSortOrder = this.notesSortOrders.DUE_DATE;
         this.showFinishedNotes = false;
 
