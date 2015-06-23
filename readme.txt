@@ -12,6 +12,9 @@ Features:
 - Responsive Layout für kleine Displays < 768px und Displays >= 768px
 - Style Switcher mit zwei Styles
 - Font Awesome für frei skalierbare Icons
+- Editieren und erfassen von Notizen
+- Sortieren nach Erstell-, Erledigt-, Fälligkeits-Datum und Wichtigkeit
+- Filtern nach erledigt
 - Templating Notizliste mit Handlebars
 - Datumsformatierung mit Moment
 - Wichtigkeits-Rating mit Star-Rating
@@ -29,6 +32,10 @@ Hinweise:
 Testing:
 - HTML 5 Markup geprüft mit Markup Validation Service:
   https://validator.w3.org/
+- Anwendung getestet in folgenden Browsern:
+  Internet Explorer 11 unter Windows 8.1
+  Chrome 43 unter Windows 8.1
+  Chrome 42 unter Android
 
 Coding Guidlines:
 - CSS:
