@@ -11,40 +11,14 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-// handle notes get request to send json string to client
-app.get('/notes', function(req, res){
-    notes.getNotes(function (err, notes) {
-        if (err) {
-            res.status(500).end();
-        } else {
-            res.set('Content-Type', 'application/json');
-            //res.status(200).send({notes: data});
-            res.status(200).send({notes: notes});
-        }
-    });
-});
+// parse application/json
+app.use(bodyParser.json())
 
-// handle note post request to save json string to file
-app.post('/notes', urlencodedParser, function(req, res){
+app.use("/notes", require('./routes/noteRoutes.js'));
 
-    // check that request contains body with note attribute
-    if (!req.body || !req.body.note) {
-        return res.sendStatus(400)
-    }
-
-    // save notes to file
-    var note = JSON.parse(req.body.note);
-    notes.saveNote(note, function (err) {
-        if (err) {
-            res.status(500).end();
-        } else {
-            res.status(200).end();
-        }
-    });
-});
 
 // server static content to client
 app.use(express.static(__dirname + '/public'));
@@ -61,8 +35,6 @@ wss.on('connection', function(ws) {
         console.log('received: %s', message);
     });
     ws.send(JSON.stringify({message: "Hello"}));
-    //ws.send('something');
-    //wss.broadcast("something else");
 });
 
 wss.broadcast = function broadcast(data) {
@@ -73,17 +45,6 @@ wss.broadcast = function broadcast(data) {
     });
 };
 
-/*wss.on('connection', function(ws) {
-    var id = setInterval(function() {
-        ws.send(JSON.stringify(process.memoryUsage()), function() { });
-    }, 100);
-    console.log('started client interval');
-    ws.on('close', function() {
-        console.log('stopping client interval');
-        clearInterval(id);
-    });
-});*/
-
 // startup server
 var server = app.listen(3000, "localhost", function () {
     var host = server.address().address;
@@ -92,7 +53,6 @@ var server = app.listen(3000, "localhost", function () {
 
     notes.setNotifyUpdateListener(function (note) {
         var data = { note: note };
-        //var dataString = JSON.stringify(data);
         wss.broadcast(data);
     })
 });
