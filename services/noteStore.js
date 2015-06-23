@@ -61,9 +61,11 @@ function privateLoadNotes(callback) {
             fs.readFile(filename, {encoding: "utf-8"}, function (err, data) {
                 if (err) {
                     if (callback) callback(err);
-                } else if (callback) {
+                } else if (data) {
                     var notes = JSON.parse(data.toString())
-                    callback(err, notes);
+                    if (callback) callback(err, notes);
+                } else {
+                    if (callback) callback(err, new Array());
                 }
             });
         } else {

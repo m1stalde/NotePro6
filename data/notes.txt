@@ -1,0 +1,26 @@
+[
+  {
+    "title": "CAS FEE Selbststudium / Projekt Aufgabe erledigen",
+    "description": "HTML für die note App erstellen.\nCSS erstellen für die note App.",
+    "importance": "3",
+    "duedate": "2015-05-28",
+    "id": 2,
+    "creationdate": "2015-04-22T19:00:55.815Z"
+  },
+  {
+    "title": "Einkaufen",
+    "description": "Butter\nEier",
+    "importance": "2",
+    "duedate": "2015-06-23",
+    "id": 3,
+    "creationdate": "2015-01-21T19:02:13.253Z"
+  },
+  {
+    "title": "Mami anrufen",
+    "description": "888 888 88 88",
+    "importance": "4",
+    "duedate": "2015-06-26",
+    "id": 4,
+    "creationdate": "2015-03-23T19:02:36.102Z"
+  }
+]
