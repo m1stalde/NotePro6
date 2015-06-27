@@ -30,11 +30,11 @@ body {
 }
 
 .col:not(:first-child) {
-    margin-left: 1em;
+    margin-left: 2em;
 }
 
 .col-1 {
-    flex: 0 0 13em;
+    flex: 0 0 10em;
 }
 
 .col-2 {
@@ -58,12 +58,7 @@ body {
 }
 
 .col-importance {
-    flex: 0 0 15em;
-}
-
-.col-description {
-    overflow: hidden;
-    max-height: 2.3em;
+    flex: 0 0 13em;
 }
 
 .col-editbutton {

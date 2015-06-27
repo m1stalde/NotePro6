@@ -124,6 +124,10 @@
                 noteList.toggleFinishdate(event.target.dataset.noteid);
             }
         });
+
+        $("#noteList").on("click", ".col-description", function(event) {
+            $(this).toggleClass("collapsed");
+        });
     }
 
     /**

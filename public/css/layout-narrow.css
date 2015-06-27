@@ -45,11 +45,6 @@ body {
     padding: 1em;
 }
 
-.col-description {
-    overflow: hidden;
-    max-height: 2.3em;
-}
-
 .editbutton {
     width: 100%;
 }

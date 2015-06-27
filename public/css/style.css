@@ -10,6 +10,38 @@
 }
 
 
+/* collapse or expand description */
+
+.col-description {
+    min-height: 2.3em; /* display 2 lines min */
+    max-height: 11.5em; /* display 10 lines max */
+    overflow: hidden;
+    transition: max-height 1s;
+
+    /* space for :after icon */
+    position: relative;
+    padding-right: 2em;
+}
+
+.col-description:after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    font-family: FontAwesome;
+    font-size: 1.5em;
+    content: "\f077"; /* chevron-up */
+}
+
+.col-description.collapsed {
+    max-height: 2.3em; /* display 2 lines max */
+}
+
+.col-description.collapsed:after {
+    content: "\f078"; /* chevron-down */
+}
+
+
 /* wiggle note */
 
 @keyframes wiggleAnimation {
