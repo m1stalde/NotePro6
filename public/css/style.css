@@ -13,10 +13,11 @@
 /* collapse or expand description */
 
 .col-description {
-    min-height: 2.3em; /* display 2 lines min */
+    min-height: 2.4em; /* display 2 lines min */
     max-height: 11.5em; /* display 10 lines max */
     overflow: hidden;
     transition: max-height 1s;
+    cursor: pointer;
 
     /* space for :after icon */
     position: relative;
@@ -34,7 +35,7 @@
 }
 
 .col-description.collapsed {
-    max-height: 2.3em; /* display 2 lines max */
+    max-height: 2.4em; /* display 2 lines max */
 }
 
 .col-description.collapsed:after {

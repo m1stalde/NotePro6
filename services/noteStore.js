@@ -8,7 +8,7 @@
 var fs = require("fs");
 
 // define defaults
-var filename = "./data/notes.txt";
+var filename = "./data/notes.json";
 
 // listener to broadcast updated notes to clients
 var notifyNoteUpdateListener = null;
